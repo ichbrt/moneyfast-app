@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MoneyFast Uganda</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">MoneyFast Uganda</div>
+            <div class="user-info">
+                <span id="user-email">Loading...</span>
+                <button class="btn btn-outline" onclick="logout()"
+                    style="padding: 0.5rem 1rem; font-size: 0.875rem;">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="flex-between mb-2">
+            <h1>Dashboard Overview</h1>
+            <div style="display: flex; gap: 1rem;">
+                <a href="/landing.html" class="btn btn-outline" target="_blank">View Website</a>
+                <a href="/upload.html" class="btn btn-primary">+ Create New Batch</a>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Volume</div>
+                <div class="stat-value" id="total-volume">...</div>
+                <div class="stat-trend text-success">Lifetime</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Payments</div>
+                <div class="stat-value" id="total-payments">...</div>
+                <div class="stat-trend text-neutral">Processed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Success Rate</div>
+                <div class="stat-value" id="success-rate">...</div>
+                <div class="stat-trend text-success">High Reliability</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Batches</div>
+                <div class="stat-value" id="total-batches">...</div>
+                <div class="stat-trend text-neutral">Created</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div class="card">
+                <h2 class="card-title">Payment Status Distribution</h2>
+                <div style="height: 300px; position: relative;">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2 class="card-title">Provider Breakdown</h2>
+                <div style="height: 300px; position: relative;">
+                    <canvas id="providerChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="error-message" class="alert alert-error hidden"></div>
+        <div id="success-message" class="alert alert-success hidden"></div>
+
+        <div class="card">
+            <div class="flex-between mb-1">
+                <h2 class="card-title" style="margin-bottom: 0;">Recent Batches</h2>
+                <button class="btn btn-secondary" onclick="loadBatches()">🔄 Refresh</button>
+            </div>
+
+            <div id="loading" class="text-center">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+
+            <div id="batches-table" class="hidden">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Total Amount</th>
+                            <th>Count</th>
+                            <th>Status</th>
+                            <th>Success</th>
+                            <th>Failed</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="batches-tbody">
+                        <!-- Batches will be loaded here -->
+                    </tbody>
+                </table>
+
+                <div id="pagination" class="mt-2 text-center"></div>
+            </div>
+
+            <div id="empty-state" class="text-center hidden" style="padding: 3rem;">
+                <p style="font-size: 3rem;">📋</p>
+                <h3>No batches created yet</h3>
+                <p class="text-secondary">Click the button above to create a new batch.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        // Check authentication
+        checkAuth();
+
+        // Display user email
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.email) {
+            document.getElementById('user-email').textContent = user.email;
+        }
+
+        // Load data
+        loadBatches();
+        loadStats();
+
+        async function loadStats() {
+            try {
+                // In a real implementation, you would fetch this from /api/stats/dashboard
+                // For now, we'll simulate or fetch from the new endpoint we will create
+                const response = await apiRequest('/api/stats/dashboard');
+
+                // Update Stats Cards
+                document.getElementById('total-volume').textContent = formatMoney(response.stats.total_volume) + ' UGX';
+                document.getElementById('total-payments').textContent = response.stats.total_payments.toLocaleString();
+                document.getElementById('success-rate').textContent = response.stats.success_rate + '%';
+                document.getElementById('total-batches').textContent = response.stats.total_batches;
+
+                // Render Charts
+                renderStatusChart(response.charts.status_distribution);
+                renderProviderChart(response.charts.provider_breakdown);
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                // Fallback or show error
+            }
+        }
+
+        function renderStatusChart(data) {
+            const ctx = document.getElementById('statusChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Success', 'Failed', 'Pending', 'Processing'],
+                    datasets: [{
+                        data: [data.success, data.failed, data.pending, data.processing],
+                        backgroundColor: ['#10b981', '#ef4444', '#f59e0b', '#6366f1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderProviderChart(data) {
+            const ctx = document.getElementById('providerChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['MTN MoMo', 'Airtel Money'],
+                    datasets: [{
+                        label: 'Transaction Volume',
+                        data: [data.mtn, data.airtel],
+                        backgroundColor: ['#fbbf24', '#ef4444'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadBatches(page = 1) {
+            const loading = document.getElementById('loading');
+            const table = document.getElementById('batches-table');
+            const emptyState = document.getElementById('empty-state');
+            const tbody = document.getElementById('batches-tbody');
+
+            try {
+                loading.classList.remove('hidden');
+                table.classList.add('hidden');
+                emptyState.classList.add('hidden');
+
+                const response = await apiRequest(`/api/batches?page=${page}&limit=10`);
+
+                if (response.batches.length === 0) {
+                    emptyState.classList.remove('hidden');
+                } else {
+                    tbody.innerHTML = response.batches.map(batch => `
+            <tr>
+              <td><strong>${batch.reference}</strong></td>
+              <td>${formatMoney(batch.total_amount)} UGX</td>
+              <td>${batch.total_items}</td>
+              <td>${getStatusBadge(batch.status)}</td>
+              <td>${batch.success_count || 0}</td>
+              <td>${batch.failed_count || 0}</td>
+              <td>${formatDate(batch.created_at)}</td>
+              <td>
+                <a href="/batch-details.html?id=${batch.id}" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                  Details
+                </a>
+              </td>
+            </tr>
+          `).join('');
+
+                    table.classList.remove('hidden');
+
+                    // Pagination
+                    renderPagination(response.pagination, page);
+                }
+            } catch (error) {
+                showError('Error loading batches: ' + error.message);
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+
+        function renderPagination(pagination, currentPage) {
+            const paginationDiv = document.getElementById('pagination');
+
+            if (pagination.totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            const buttons = [];
+
+            // Previous button
+            if (currentPage > 1) {
+                buttons.push(`<button class="btn btn-outline" onclick="loadBatches(${currentPage - 1})">« Previous</button>`);
+            }
+
+            // Page info
+            buttons.push(`<span style="margin: 0 1rem;">Page ${currentPage} / ${pagination.totalPages}</span>`);
+
+            // Next button
+            if (currentPage < pagination.totalPages) {
+                buttons.push(`<button class="btn btn-outline" onclick="loadBatches(${currentPage + 1})">Next »</button>`);
+            }
+
+            paginationDiv.innerHTML = buttons.join('');
+        }
+
+        function getStatusBadge(status) {
+            const badges = {
+                'NEW': '<span class="badge badge-pending">New</span>',
+                'PROCESSING': '<span class="badge badge-processing">Processing</span>',
+                'DONE': '<span class="badge badge-success">Completed</span>',
+                'PARTIAL': '<span class="badge badge-warning">Partial</span>',
+                'FAILED': '<span class="badge badge-failed">Failed</span>',
+            };
+            return badges[status] || status;
+        }
+    </script>
+</body>
+
+</html>
