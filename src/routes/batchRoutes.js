@@ -14,9 +14,11 @@ const { asyncHandler } = require('../middlewares/errorMiddleware');
 
 const router = express.Router();
 
+const os = require('os');
+
 // Configure multer for file uploads
 const upload = multer({
-    dest: 'uploads/',
+    dest: os.tmpdir(), // Use system temp dir (works on Vercel/Lambda)
     limits: {
         fileSize: 5 * 1024 * 1024, // 5MB
     },
