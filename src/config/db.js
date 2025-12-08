@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS api_logs (
     created_at TEXT DEFAULT (datetime('now'))
 );
 INSERT OR IGNORE INTO users (id, name, email, password_hash, role) VALUES 
-('admin-user-001', 'System Admin', 'admin@smsconstruction.com', '$2b$10$rBV2kWq7hYZJ3Z8kKJ3Z3OGDYqZQyY5LxN5qXZvZ5qZqZqZqZqZqZ', 'ADMIN');
+('admin-user-001', 'System Admin', 'admin@smsconstruction.com', '$2b$10$Dv1CZEwWkHfPqhEBKgxsJOzHPDOBoTlwIZWgBWUFsybg5fmXhVMe6', 'ADMIN');
 `;
 
 // Check if we are in a PostgreSQL environment (e.g., Vercel with DATABASE_URL)
