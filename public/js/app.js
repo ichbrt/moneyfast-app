@@ -63,7 +63,9 @@ async function apiRequest(url, options = {}) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.error || 'Request failed');
+        const error = new Error(data.error || 'Request failed');
+        error.details = data.errors || data.details;
+        throw error;
     }
 
     return data;

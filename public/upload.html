@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Batch - MoneyFast Uganda</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/assets/logo.png">
 </head>
 
 <body>
@@ -44,6 +45,28 @@
                     </div>
                     <div id="file-info" class="mt-1 hidden text-center">
                         <span class="badge badge-processing" id="file-name"></span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label">Download Templates</label>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="/files/BulkPayment_Template_Blank.xlsx" class="btn btn-outline" download
+                            style="font-size: 0.85rem;">
+                            <i class="fas fa-download"></i> Excel Template (Blank)
+                        </a>
+                        <a href="/files/BulkPayment_Template_Sample.xlsx" class="btn btn-outline" download
+                            style="font-size: 0.85rem;">
+                            <i class="fas fa-file-excel"></i> Excel Sample
+                        </a>
+                        <a href="/files/BulkPayment_Template_Blank.csv" class="btn btn-outline" download
+                            style="font-size: 0.85rem;">
+                            <i class="fas fa-file-csv"></i> CSV Template (Blank)
+                        </a>
+                        <a href="/files/BulkPayment_Template_Sample.csv" class="btn btn-outline" download
+                            style="font-size: 0.85rem;">
+                            <i class="fas fa-file-alt"></i> CSV Sample
+                        </a>
                     </div>
                 </div>
 
@@ -140,7 +163,11 @@
                 }, 1500);
 
             } catch (error) {
-                showError(error.message);
+                let errorMessage = error.message;
+                if (error.details && Array.isArray(error.details)) {
+                    errorMessage += ':\n' + error.details.map(e => `• ${e}`).join('\n');
+                }
+                showError(errorMessage);
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Create Batch';
             }

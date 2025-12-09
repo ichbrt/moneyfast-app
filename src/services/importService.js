@@ -89,7 +89,11 @@ function processRecords(records) {
             return undefined;
         };
 
-        const phoneNumber = findKey(record, ['phone_number', 'phone', 'msisdn', 'mobile']);
+        let safePhone = phoneNumber;
+        if (safePhone !== undefined && safePhone !== null) {
+            safePhone = String(safePhone);
+        }
+
         const amount = findKey(record, ['amount', 'value']);
         const reference = findKey(record, ['reference', 'ref']);
         const description = findKey(record, ['description', 'narration', 'desc']);
@@ -101,7 +105,7 @@ function processRecords(records) {
         }
 
         return {
-            phone_number: phoneNumber,
+            phone_number: safePhone,
             amount: parsedAmount,
             reference: reference || '',
             description: description || '',
