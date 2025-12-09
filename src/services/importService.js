@@ -89,6 +89,7 @@ function processRecords(records) {
             return undefined;
         };
 
+        const phoneNumber = findKey(record, ['phone_number', 'phone', 'msisdn', 'mobile']);
         let safePhone = phoneNumber;
         if (safePhone !== undefined && safePhone !== null) {
             safePhone = String(safePhone);
