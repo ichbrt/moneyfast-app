@@ -11,8 +11,7 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;"><span
-                    style="font-size: 1.75rem;">⚡</span><span>MoneyFast</span></div>
+            <a href="/dashboard.html" class="logo" style="text-decoration: none;">MoneyFast Uganda</a>
             <div class="user-info">
                 <span id="user-name">Loading...</span>
                 <button class="btn btn-danger" onclick="logout()" style="padding: 0.5rem 1rem;">Logout</button>
@@ -122,13 +121,20 @@
 
         loadBatch();
 
-        async function loadBatch() {
+        // Auto-refresh every 5 seconds
+        setInterval(() => {
+            loadBatch(true); // true = silent refresh (no spinner)
+        }, 5000);
+
+        async function loadBatch(silent = false) {
             const loading = document.getElementById('loading');
             const content = document.getElementById('content');
 
             try {
-                loading.classList.remove('hidden');
-                content.classList.add('hidden');
+                if (!silent) {
+                    loading.classList.remove('hidden');
+                    content.classList.add('hidden');
+                }
 
                 const batch = await apiRequest(`/api/batches/${batchId}`);
 

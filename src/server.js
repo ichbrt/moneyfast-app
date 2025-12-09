@@ -27,7 +27,7 @@ const server = app.listen(PORT, () => {
     // Start payout worker (processes payments every 60 seconds)
     const { startPayoutWorker } = require('./services/payoutService');
     console.log('🔄 Starting automatic payout worker...');
-    startPayoutWorker(60000); // Process every 60 seconds
+    startPayoutWorker(5000); // Process every 5 seconds
     console.log('✅ Payout worker started successfully\n');
 });
 
