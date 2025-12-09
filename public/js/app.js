@@ -47,6 +47,11 @@ async function apiRequest(url, options = {}) {
         },
     };
 
+    // Remove Content-Type for FormData (let browser set it with boundary)
+    if (options.body instanceof FormData) {
+        delete finalOptions.headers['Content-Type'];
+    }
+
     const response = await fetch(url, finalOptions);
 
     // Handle authentication errors

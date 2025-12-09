@@ -128,7 +128,10 @@
                 formData.append('file', file);
                 formData.append('reference', reference);
 
-                const response = await apiRequest('/api/batches/upload-csv', 'POST', formData);
+                const response = await apiRequest('/api/batches/upload-csv', {
+                    method: 'POST',
+                    body: formData
+                });
 
                 showSuccess(`Batch created successfully! ${response.summary.validRows} payments added.`);
 
