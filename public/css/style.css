@@ -75,11 +75,13 @@ body {
 .logo {
   font-size: 1.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 100%);
+  /* Matching Landing Page Gradient: #00D2FF to #3A7BD5 */
+  background: linear-gradient(135deg, #00D2FF 0%, #3A7BD5 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: -0.025em;
+  letter-spacing: -1px;
+  font-style: italic;
 }
 
 .user-info {

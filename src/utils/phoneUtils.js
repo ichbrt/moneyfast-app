@@ -18,18 +18,16 @@ function detectProvider(phone) {
     // Remove all non-digit characters
     const cleaned = phone.replace(/\D/g, '');
 
-    // Extract prefix (first 3 digits after country code, or first 3 if local)
-    let prefix;
-    if (cleaned.startsWith('256')) {
-        // International format: 2567xxxxxxxx
-        prefix = cleaned.substring(3, 6);
-    } else if (cleaned.startsWith('0')) {
-        // Local format: 07xxxxxxxx
-        prefix = cleaned.substring(0, 3);
-    } else {
-        // Try as is
-        prefix = cleaned.substring(0, 3);
+    // Normalize to local format for checking (07...)
+    let checkStr = cleaned;
+    if (checkStr.startsWith('256')) {
+        checkStr = '0' + checkStr.substring(3);
     }
+
+    // Ensure we have at least 3 digits
+    if (checkStr.length < 3) return null;
+
+    const prefix = checkStr.substring(0, 3);
 
     if (MTN_PREFIXES.includes(prefix)) {
         return 'MTN';
