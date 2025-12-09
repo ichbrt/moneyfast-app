@@ -69,14 +69,22 @@ function processRecords(records) {
         // For Excel, keys might be trimmed or not depending on the file, xlsx utils usually trim headers if configured,
         // but let's be robust.
 
-        // Helper to find a key case-insensitively if direct match fails
+        // Helper to find a key case-insensitively and flexibly
         const findKey = (obj, keys) => {
             const objKeys = Object.keys(obj);
             for (const key of keys) {
+                // Direct match
                 if (obj[key] !== undefined) return obj[key];
-                // Case insensitive fallback
-                const found = objKeys.find(k => k.toLowerCase() === key.toLowerCase());
-                if (found) return obj[found];
+
+                // Flexible match (case insensitive, ignore underscores and spaces)
+                const normalize = (str) => str.toLowerCase().replace(/[_ ]/g, '').trim();
+                const targetKey = normalize(key);
+
+                const found = objKeys.find(k => normalize(k) === targetKey);
+
+                if (found) {
+                    return obj[found];
+                }
             }
             return undefined;
         };

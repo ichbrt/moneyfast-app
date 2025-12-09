@@ -65,7 +65,8 @@ INSERT OR IGNORE INTO users (id, name, email, password_hash, role) VALUES
 `;
 
 // Check if we are in a PostgreSQL environment (e.g., Vercel with DATABASE_URL)
-if (process.env.DATABASE_URL) {
+// But respect MOCK_MODE to force SQLite/Memory (e.g. for testing)
+if (process.env.DATABASE_URL && process.env.MOCK_MODE !== 'true') {
   console.log('🔌 Connecting to PostgreSQL...');
   try {
     const { Pool } = require('pg');
