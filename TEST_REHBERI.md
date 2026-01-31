@@ -5,7 +5,7 @@ Sistem tamamen hazır! İşte adım adım nasıl test edeceğiniz:
 ## 1. Giriş
 - **Adres:** `http://localhost:3000`
 - **Tasarım Kontrol:** Mor/Mavi geçişli (gradient) arka plan ve modern bir login kutusu görmelisiniz.
-- **Email:** `admin@smsconstruction.com`
+- **Email:** `admin@spacebera.com`
 - **Şifre:** `admin123`
 - **Tıkla:** "Login to Dashboard"
 

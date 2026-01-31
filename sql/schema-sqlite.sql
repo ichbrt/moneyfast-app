@@ -79,4 +79,4 @@ CREATE INDEX IF NOT EXISTS idx_api_logs_created_at ON api_logs(created_at);
 -- Insert default admin user (password: admin123)
 -- Hash: $2b$10$rBV2kWq7hYZJ3Z8kKJ3Z3OGDYqZQyY5LxN5qXZvZ5qZqZqZqZqZqZ
 INSERT OR IGNORE INTO users (id, name, email, password_hash, role) VALUES 
-('admin-user-001', 'System Admin', 'admin@smsconstruction.com', '$2b$10$rBV2kWq7hYZJ3Z8kKJ3Z3OGDYqZQyY5LxN5qXZvZ5qZqZqZqZqZqZ', 'ADMIN');
+('admin-user-001', 'System Admin', 'admin@spacebera.com', '$2b$10$rBV2kWq7hYZJ3Z8kKJ3Z3OGDYqZQyY5LxN5qXZvZ5qZqZqZqZqZqZ', 'ADMIN');

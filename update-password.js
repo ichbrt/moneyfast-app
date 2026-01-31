@@ -11,7 +11,7 @@ const correctHash = '$2b$10$wUQQ4UcVqIkG7haytVATAe6xnlGVo.slZeZ5UPYfP8zuLGcw94WI
 const result = db.prepare(`
   UPDATE users 
   SET password_hash = ? 
-  WHERE email = 'admin@smsconstruction.com'
+  WHERE email = 'admin@spacebera.com'
 `).run(correctHash);
 
 console.log('✅ Admin password updated!');
@@ -19,7 +19,7 @@ console.log('Rows affected:', result.changes);
 
 // Verify
 const user = db.prepare('SELECT email, role FROM users WHERE email = ?')
-    .get('admin@smsconstruction.com');
+  .get('admin@spacebera.com');
 
 console.log('User verified:', user);
 db.close();

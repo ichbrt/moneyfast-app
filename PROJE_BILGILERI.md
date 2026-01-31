@@ -27,7 +27,7 @@ npm run dev
 
 Sunucu başladıktan sonra:
 - Tarayıcıda açın: **http://localhost:3000**
-- Giriş: `admin@smsconstruction.com` / `admin123`
+- Giriş: `admin@spacebera.com` / `admin123`
 
 ## 📁 Önemli Dosyalar
 
@@ -61,7 +61,7 @@ npm test
 
 | Email | Şifre | Rol |
 |-------|-------|-----|
-| admin@smsconstruction.com | admin123 | ADMIN |
+| admin@spacebera.com | admin123 | ADMIN |
 
 ## 📊 Proje Yapısı
 

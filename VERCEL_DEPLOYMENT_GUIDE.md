@@ -129,7 +129,7 @@ Deploy tamamlandıktan sonra:
 ### Login Test
 1. `https://moneyfast-app-xxx.vercel.app/login.html` adresine gidin
 2. Default credentials ile giriş yapın:
-   - **Email**: `admin@smsconstruction.com`
+   - **Email**: `admin@spacebera.com`
    - **Password**: `admin123`
 3. Başarılı giriş sonrası dashboard'a yönlendirilmelisiniz
 
@@ -191,7 +191,7 @@ Tebrikler! MoneyFast Uganda artık canlıda! 🎉
 
 ### Default Login Credentials
 
-- **Email**: `admin@smsconstruction.com`
+- **Email**: `admin@spacebera.com`
 - **Password**: `admin123`
 
 > ⚠️ **GÜVENLİK UYARISI**: Production'a geçmeden önce mutlaka şifreyi değiştirin!

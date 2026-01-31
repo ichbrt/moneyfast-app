@@ -73,7 +73,7 @@ Tarayıcınızda açın:
 - **API**: http://localhost:3000/api
 
 **Varsayılan Giriş Bilgileri:**
-- E-posta: `admin@smsconstruction.com`
+- E-posta: `admin@spacebera.com`
 - Şifre: `admin123`
 
 ⚠️ **ÖNEMLİ**: Üretim ortamında bu şifreyi mutlaka değiştirin!
@@ -145,7 +145,7 @@ var client = new HttpClient();
 client.BaseAddress = new Uri("http://localhost:3000");
 
 // Login
-var loginData = new { email = "admin@smsconstruction.com", password = "admin123" };
+var loginData = new { email = "admin@spacebera.com", password = "admin123" };
 var loginResponse = await client.PostAsJsonAsync("/api/auth/login", loginData);
 var loginResult = await loginResponse.Content.ReadFromJsonAsync<LoginResponse>();
 string token = loginResult.token;

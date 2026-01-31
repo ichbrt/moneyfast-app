@@ -86,7 +86,7 @@
 
 ### Default Login
 
-- **Email**: admin@smsconstruction.com
+- **Email**: admin@spacebera.com
 - **Password**: admin123
 
 ⚠️ **Change this password in production!**

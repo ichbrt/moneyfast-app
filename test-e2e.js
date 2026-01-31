@@ -10,7 +10,7 @@ const FormData = require('form-data');
 const path = require('path');
 
 const BASE_URL = 'http://localhost:3000/api';
-const EMAIL = 'admin@smsconstruction.com';
+const EMAIL = 'admin@spacebera.com';
 const PASSWORD = 'admin123';
 
 // Delay helper

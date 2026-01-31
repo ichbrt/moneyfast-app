@@ -7,7 +7,7 @@ async function generateHash() {
     console.log('Password:', password);
     console.log('Hash:', hash);
     console.log('\nUpdate SQL:');
-    console.log(`UPDATE users SET password_hash = '${hash}' WHERE email = 'admin@smsconstruction.com';`);
+    console.log(`UPDATE users SET password_hash = '${hash}' WHERE email = 'admin@spacebera.com';`);
 }
 
 generateHash();

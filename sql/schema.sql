@@ -107,7 +107,7 @@ CREATE TRIGGER update_bulk_items_updated_at BEFORE UPDATE ON bulk_items
 -- Insert default admin user (password: admin123)
 -- Hash generated with bcrypt for 'admin123'
 INSERT INTO users (name, email, password_hash, role) VALUES 
-('System Admin', 'admin@smsconstruction.com', '$2b$10$rBV2kWq7hYZJ3Z8kKJ3Z3OGDYqZQyY5LxN5qXZvZ5qZqZqZqZqZqZ', 'ADMIN');
+('System Admin', 'admin@spacebera.com', '$2b$10$rBV2kWq7hYZJ3Z8kKJ3Z3OGDYqZQyY5LxN5qXZvZ5qZqZqZqZqZqZ', 'ADMIN');
 
 -- Sample data for testing (optional)
 -- INSERT INTO users (name, email, password_hash, role) VALUES 

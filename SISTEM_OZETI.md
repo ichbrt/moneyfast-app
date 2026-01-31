@@ -23,7 +23,7 @@ C:\Users\Berat Demirci\.gemini\antigravity\scratch\bulk-payment-system
 
 **2. Sisteme Yükler:**
 - http://localhost:3000 açar
-- `admin@smsconstruction.com` / `admin123` ile giriş yapar
+- `admin@spacebera.com` / `admin123` ile giriş yapar
 - "Create New Batch" tıklar
 - Excel dosyasını sürükler
 - "Create Batch" tıklar
@@ -218,7 +218,7 @@ npm run dev
 http://localhost:3000
 
 # Giriş
-Email: admin@smsconstruction.com
+Email: admin@spacebera.com
 Pass: admin123
 ```
 
