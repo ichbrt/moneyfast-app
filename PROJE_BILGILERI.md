@@ -2,7 +2,7 @@
 
 ## 📍 Proje Konumu
 ```
-C:\Users\Berat Demirci\.gemini\antigravity\scratch\moneyfast-uganda
+D:\Projeler\AntiGravityProjects\Projects\moneyfast-app
 ```
 
 ## 🔄 Projeye Geri Dönme
@@ -10,7 +10,7 @@ C:\Users\Berat Demirci\.gemini\antigravity\scratch\moneyfast-uganda
 ### Yöntem 1: VS Code ile
 1. VS Code'u açın
 2. **File → Open Folder**
-3. Şu klasörü seçin: `C:\Users\Berat Demirci\.gemini\antigravity\scratch\bulk-payment-system`
+3. Şu klasörü seçin: `D:\Projeler\AntiGravityProjects\Projects\moneyfast-app`
 
 ### Yöntem 2: Terminal ile
 ```powershell
